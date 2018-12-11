@@ -2,6 +2,36 @@
  * Create a list that holds all of your cards
  */
 
+    //  This grabs the list of cards
+    const cardList = document.querySelectorAll("li.card");
+    
+    // This spreads the cards out using a spread operator
+    let cards = [...cardList];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
  * Display the cards on the page
