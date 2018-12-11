@@ -2,32 +2,15 @@
  * Create a list that holds all of your cards
  */
 
-    //  This grabs the list of cards
-    const cardList = document.querySelectorAll("li.card");
-    
-    // This spreads the cards out using a spread operator
-    let cards = [...cardList];
+//  This grabs the list of cards
+let cardList = document.querySelectorAll("li.card");
 
+// This spreads the cards out using a spread operator
+let cards = [...cardList];
 
+// This grabs the deck 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+let deck = document.querySelector('.deck');
 
 
 
@@ -54,6 +37,30 @@ function shuffle(array) {
 
     return array;
 }
+
+// This is the function that starts the game
+function startGame() {
+
+    //Cards are shuffled then added to the deck
+      let shuffledCards = shuffle(cards);
+    
+    // This for loop   
+    for(let i = 0;i < shuffledCards.length; i++) {
+        
+        // This adds the newly shuffled card back into the deck
+        deck.appendChild(shuffledCards[i]);
+
+        // This displays  each one of the cards    
+        shuffledCards[i].classList.add('show','open');   
+    }
+
+}
+
+
+
+
+
+
 
 
 /*
