@@ -8,6 +8,13 @@ let cards = [...cardList];
 // This grabs the deck 
 let deck = document.querySelector('.deck');
 
+//Opened card array
+let openCards = [];
+
+//Matched cards
+// moves counter
+let moves = 0;
+
 
 
 
@@ -36,7 +43,6 @@ function displayCards() {
 };
 
 
-
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -47,11 +53,9 @@ function displayCards() {
 //  This fires the "Start Game" function
  document.body.onload = startGame();
 
+
 // This is the function that starts the game
 function startGame() {
-
-    //Calls the displayCards function
-    displayCards();
 
     //Cards are shuffled then added to the deck
       let shuffledCards = shuffle(cards);
@@ -60,25 +64,45 @@ function startGame() {
     for(let i = 0;i < shuffledCards.length; i++) {
 
         // This calls the deck and then appends each one of the shuffled cards back into the deck
-        deck.appendChild(shuffledCards[i]); 
+        deck.appendChild(shuffledCards[i]);
+        
     }
     
+    //Calls the displayCards function
+    displayCards();
+
     //This closes the cards after 5 seconds
-    setTimeout( function closeCards() {
+    setTimeout(function closeCards() {
         for (let i = 0; i < cardList.length; i++) {
             cardList[i].classList.remove('open', 'show', 'match');
         }
     }, 3000);
 
+    // adds a click event to each one of the cards 
+    for(let i = 0; i < cardList.length; i++) {
+        cardList[i].addEventListener('click',function () {
+            cardList[i].classList.add('show','open');
+        })
+    }
+
+    // creates logic if card is clicked 
+
+
 }
 
 
 
+//Grabs restart button 
+let restartButton = document.querySelector('.restart');
 
-
-
-
-
+// function that reloads game
+function restartGame() {
+    restartButton.addEventListener('click', function restart() {
+        location.reload();
+    })
+}
+// call to restart game function
+restartGame();
 
 
 /*
