@@ -1,6 +1,3 @@
-/*
- * Create a list that holds all of your cards
- */
 
 //  This grabs the list of cards
 let cardList = document.querySelectorAll("li.card");
@@ -15,12 +12,6 @@ let deck = document.querySelector('.deck');
 
 
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -37,24 +28,51 @@ function shuffle(array) {
     return array;
 }
 
+// This function adds the classes showing where the cards are
+function displayCards() {
+    for (let i = 0; i < cardList.length; i++) {
+        cardList[i].classList.add('open', 'show', 'match');
+    }
+};
+
+
+
+/*
+ * Display the cards on the page
+ *   - shuffle the list of cards using the provided "shuffle" method below
+ *   - loop through each card and create its HTML
+ *   - add each card's HTML to the page
+ */
+
+//  This fires the "Start Game" function
+ document.body.onload = startGame();
+
 // This is the function that starts the game
 function startGame() {
+
+    //Calls the displayCards function
+    displayCards();
 
     //Cards are shuffled then added to the deck
       let shuffledCards = shuffle(cards);
     
     // This for loop adds each one of the shuffled cards back into the deck
     for(let i = 0;i < shuffledCards.length; i++) {
+
         // This calls the deck and then appends each one of the shuffled cards back into the deck
         deck.appendChild(shuffledCards[i]); 
     }
+    
+    //This closes the cards after 5 seconds
+    setTimeout( function closeCards() {
+        for (let i = 0; i < cardList.length; i++) {
+            cardList[i].classList.remove('open', 'show', 'match');
+        }
+    }, 3000);
 
 }
 
-const displayCards = (arrayOfCards) => {
-    arrayOfCards.className.remove('open','show','match');
-    
-};
+
 
 
 
