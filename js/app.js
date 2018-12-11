@@ -12,17 +12,15 @@ let deck = document.querySelector('.deck');
 let openCards = [];
 
 //matched cards
+let matchedCards = [];
 
+//
+let movesCounter = document.querySelector('.moves');
 //Moves counter
 let moves = 0;
 
 //Grabs restart button 
 let restartButton = document.querySelector('.restart');
-
-
-
-
-
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -52,10 +50,15 @@ function displayCards() {
         cardList[i].classList.add('open', 'show', 'match');
     }
 };
+function updateMoves() {
 
+}
+
+// This function logs the #id of the specific card clicked. It also 
 function targetClick(event) {
     let cardClicked= event.target;
     console.log(cardClicked.id);
+    moves++;
 }
 
 /*
@@ -68,7 +71,6 @@ function targetClick(event) {
 //  This fires the "Start Game" function
  document.body.onload = startGame();
 
-
 // This is the function that starts the game
 function startGame() {
 
@@ -77,10 +79,9 @@ function startGame() {
     
     // This for loop adds each one of the shuffled cards back into the deck
     for(let i = 0;i < shuffledCards.length; i++) {
-
-        // This calls the deck and then appends each one of the shuffled cards back into the deck
-        deck.appendChild(shuffledCards[i]);
         
+        // This calls the deck and then appends each one of the shuffled cards back into the deck
+        deck.appendChild(shuffledCards[i]);    
     }
     
     //Calls the displayCards function
@@ -91,7 +92,7 @@ function startGame() {
         for (let i = 0; i < cardList.length; i++) {
             cardList[i].classList.remove('open', 'show', 'match');
         }
-    }, 3000);
+    }, 2000);
 
     // adds a click event to each one of the cards and on click card is added to Opened cards 
     for(let i = 0; i < cardList.length; i++) {
@@ -100,10 +101,6 @@ function startGame() {
             cardList[i].onclick = targetClick(event);
         })
     }
-
-    // creates logic if card is clicked stay opened cards
-    
-
 
 }
 
