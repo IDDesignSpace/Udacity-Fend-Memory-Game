@@ -11,9 +11,13 @@ let deck = document.querySelector('.deck');
 //Opened card array
 let openCards = [];
 
-//Matched cards
-// moves counter
+//matched cards
+
+//Moves counter
 let moves = 0;
+
+//Grabs restart button 
+let restartButton = document.querySelector('.restart');
 
 
 
@@ -35,6 +39,13 @@ function shuffle(array) {
     return array;
 }
 
+// function that reloads game
+function restartGame() {
+    restartButton.addEventListener('click', function restart() {
+        location.reload();
+    })
+}
+
 // This function adds the classes showing where the cards are
 function displayCards() {
     for (let i = 0; i < cardList.length; i++) {
@@ -42,6 +53,10 @@ function displayCards() {
     }
 };
 
+function targetClick(event) {
+    let cardClicked= event.target;
+    console.log(cardClicked.id);
+}
 
 /*
  * Display the cards on the page
@@ -58,7 +73,7 @@ function displayCards() {
 function startGame() {
 
     //Cards are shuffled then added to the deck
-      let shuffledCards = shuffle(cards);
+    let shuffledCards = shuffle(cards);
     
     // This for loop adds each one of the shuffled cards back into the deck
     for(let i = 0;i < shuffledCards.length; i++) {
@@ -78,32 +93,19 @@ function startGame() {
         }
     }, 3000);
 
-    // adds a click event to each one of the cards 
+    // adds a click event to each one of the cards and on click card is added to Opened cards 
     for(let i = 0; i < cardList.length; i++) {
         cardList[i].addEventListener('click',function () {
             cardList[i].classList.add('show','open');
+            cardList[i].onclick = targetClick(event);
         })
     }
 
-    // creates logic if card is clicked 
+    // creates logic if card is clicked stay opened cards
+    
 
 
 }
-
-
-
-//Grabs restart button 
-let restartButton = document.querySelector('.restart');
-
-// function that reloads game
-function restartGame() {
-    restartButton.addEventListener('click', function restart() {
-        location.reload();
-    })
-}
-// call to restart game function
-restartGame();
-
 
 /*
  * set up the event listener for a card. If a card is clicked:
