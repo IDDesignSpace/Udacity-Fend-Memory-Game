@@ -9,7 +9,6 @@ let cardList = document.querySelectorAll("li.card");
 let cards = [...cardList];
 
 // This grabs the deck 
-
 let deck = document.querySelector('.deck');
 
 
@@ -44,17 +43,18 @@ function startGame() {
     //Cards are shuffled then added to the deck
       let shuffledCards = shuffle(cards);
     
-    // This for loop   
+    // This for loop adds each one of the shuffled cards back into the deck
     for(let i = 0;i < shuffledCards.length; i++) {
-        
-        // This adds the newly shuffled card back into the deck
-        deck.appendChild(shuffledCards[i]);
-
-        // This displays  each one of the cards    
-        shuffledCards[i].classList.add('show','open');   
+        // This calls the deck and then appends each one of the shuffled cards back into the deck
+        deck.appendChild(shuffledCards[i]); 
     }
 
 }
+
+const displayCards = (arrayOfCards) => {
+    arrayOfCards.className.remove('open','show','match');
+    
+};
 
 
 
