@@ -23,6 +23,13 @@ let moves = 0;
 //Grabs restart button 
 let restartButton = document.querySelector('.restart');
 
+// grabs star list
+let starList  = document.querySelectorAll('.fa-star');
+let stars = [...starList];
+
+
+//  This fires the "Start Game" function
+document.body.onload = startGame(), restartGame();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -39,15 +46,33 @@ function shuffle(array) {
     return array;
 }
 
-
-//  This fires the "Start Game" function
-document.body.onload = startGame(), restartGame();
-
 // restart game function 
 function restartGame() {
     restartButton.addEventListener('click', function restart() {
         location.reload();
     })
+}
+
+function updateStars() {
+    if (moves < 8 && matchedCards.length < 16) {
+        for(let i = 0; i < stars.length; i++) {
+        stars[i].classList.add('yellow-star');
+        }
+
+    } else if (moves < 16 && matchedCards.length < 16) {
+        stars[0].classList.remove('yellow-star');
+        stars[1].classList.add('yellow-star'); 
+
+    } else if (moves < 24 && matchedCards.length < 16) {
+        stars[0].classList.remove('yellow-star');
+        stars[1].classList.remove('yellow-star');
+    } else {
+        for (let i = 0; i < stars.length; i++) {
+            stars[i].classList.remove('yellow-star');
+        }
+        return;
+    }
+
 }
 
 // Display Card Function
@@ -100,15 +125,15 @@ function checkOpenCards() {
     }
    
 }
-// This is what happens when a card is clicked
+// // This is what happens when a card is clicked
 
-function targetClick(event) {
-    let cardClicked = event.target;
-    console.log(cardClicked.className);
+// function targetClick(event) {
+//     let cardClicked = event.target;
+//     console.log(cardClicked.className);
 
-    //if the card clicked is already open or matched do nothing!
+//     //if the card clicked is already open or matched do nothing!
 
-}
+// }
 
 /*
  * Display the cards on the page
@@ -120,6 +145,7 @@ function targetClick(event) {
 // This is the function that starts the game
 function startGame() {
 
+    
     //Cards are shuffled then added to the deck
     let shuffledCards = shuffle(cards);
     
@@ -137,12 +163,13 @@ function startGame() {
         for (let i = 0; i < cards.length; i++) {
             cards[i].classList.remove('open', 'show', 'match');
         }
-    }, 2000);
+    }, 1500);
 
     // adds a click event to each one of the cards and on click card is added to Opened cards 
     for(let i = 0; i < cards.length; i++) {
         cards[i].addEventListener('click',function () {
-           // *****maybe add some logic here to check to see if card is already open? or has class of match? 
+           // *****maybe add some logic here to check to see if card is already open? or has class of match?
+            
             console.log(cards[i].classList);
            if (openCards.length < 2 ) {
               cards[i].classList.add('show','open');
@@ -151,9 +178,13 @@ function startGame() {
            } else {
                checkOpenCards();
                updateMoves();
+               updateStars();
            }
         });
+
+        updateStars();
     }
+
 }
 
 /*
@@ -167,6 +198,7 @@ function startGame() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+// grabs star list 
 
 
 
