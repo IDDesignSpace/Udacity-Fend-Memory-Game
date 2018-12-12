@@ -50,8 +50,9 @@ function shuffle(array) {
 function restartGame() {
     restartButton.addEventListener('click', function restart() {
         location.reload();
-    })
+    });
 }
+//updates stars based on number of moves
 
 function updateStars() {
     if (moves < 8 && matchedCards.length < 16) {
@@ -155,7 +156,7 @@ function startGame() {
         deck.appendChild(shuffledCards[i]);    
     }
     
-    //Calls the displayCards function
+    //Calls to displayCards function
     displayCards();
 
     //This closes the cards after 5 seconds
@@ -168,20 +169,26 @@ function startGame() {
     // adds a click event to each one of the cards and on click card is added to Opened cards 
     for(let i = 0; i < cards.length; i++) {
         cards[i].addEventListener('click',function () {
-           // *****maybe add some logic here to check to see if card is already open? or has class of match?
-            
+             
             console.log(cards[i].classList);
+
+           //upon clicking a card the length of the openCards array is checked
+            
            if (openCards.length < 2 ) {
+
               cards[i].classList.add('show','open');
               addOpenCard(cards[i]);
         //    cards[i].onclick = targetClick(event);
+
            } else {
                checkOpenCards();
                updateMoves();
                updateStars();
            }
+
         });
 
+        // calls to updateStarsFunction
         updateStars();
     }
 
@@ -198,7 +205,12 @@ function startGame() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-// grabs star list 
+ 
+//  congratulations modal
+// creates html
+// display number of stars
+// display timer 
+// if matched cards equal 16 display modal
 
 
 
