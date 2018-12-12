@@ -14,13 +14,15 @@ let openCards = [];
 //matched cards
 let matchedCards = [];
 
-//
+//grabs "moves" class from HTML
 let movesCounter = document.querySelector('.moves');
+
 //Moves counter
 let moves = 0;
 
 //Grabs restart button 
 let restartButton = document.querySelector('.restart');
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -37,28 +39,75 @@ function shuffle(array) {
     return array;
 }
 
-// function that reloads game
+
+//  This fires the "Start Game" function
+document.body.onload = startGame(), restartGame();
+
+// restart game function 
 function restartGame() {
     restartButton.addEventListener('click', function restart() {
         location.reload();
     })
 }
 
-// This function adds the classes showing where the cards are
+// Display Card Function
 function displayCards() {
     for (let i = 0; i < cardList.length; i++) {
         cardList[i].classList.add('open', 'show', 'match');
     }
-};
-function updateMoves() {
-
 }
 
-// This function logs the #id of the specific card clicked. It also 
-function targetClick(event) {
-    let cardClicked= event.target;
-    console.log(cardClicked.id);
+//Upates the HTML with the move counter
+function updateMoves() {
     moves++;
+    movesCounter.innerHTML = moves;
+}
+
+//  function: add to open cards
+function addOpenCard (card) {
+    openCards.push(card);
+}
+
+//Clear Open Cards Function
+function clearOpenCards() {
+    openCards = [];
+}
+
+//Adds matched cards to matchedCard array
+function addMatchedCards() {
+    for (let i = 0; i < openCards.length; i++) {
+        openCards[i].classList.add('match', 'show');
+        openCards[i].removeEventListener('click', function () {
+            openCards[i].classList.add('show', 'open');
+            openCards[i].onclick = targetClick(event);
+        });
+        matchedCards.push(openCards[i]);
+    }
+  
+}
+
+function checkOpenCards() {
+
+    // calls update moves function
+    if (openCards[0].innerHTML === openCards[1].innerHTML) {
+        addMatchedCards();
+        clearOpenCards();
+    } else {
+        for (let i = 0; i < openCards.length; i++) {
+            openCards[i].classList.remove('open', 'show');   
+        }
+        clearOpenCards();
+    }
+   
+}
+// This is what happens when a card is clicked
+
+function targetClick(event) {
+    let cardClicked = event.target;
+    console.log(cardClicked.className);
+
+    //if the card clicked is already open or matched do nothing!
+
 }
 
 /*
@@ -68,9 +117,6 @@ function targetClick(event) {
  *   - add each card's HTML to the page
  */
 
-//  This fires the "Start Game" function
- document.body.onload = startGame();
-
 // This is the function that starts the game
 function startGame() {
 
@@ -78,9 +124,8 @@ function startGame() {
     let shuffledCards = shuffle(cards);
     
     // This for loop adds each one of the shuffled cards back into the deck
-    for(let i = 0;i < shuffledCards.length; i++) {
-        
-        // This calls the deck and then appends each one of the shuffled cards back into the deck
+    for(let i = 0;i < shuffledCards.length; i++) {        
+        //This calls the deck and then appends each one of the shuffled cards back into the deck
         deck.appendChild(shuffledCards[i]);    
     }
     
@@ -89,19 +134,26 @@ function startGame() {
 
     //This closes the cards after 5 seconds
     setTimeout(function closeCards() {
-        for (let i = 0; i < cardList.length; i++) {
-            cardList[i].classList.remove('open', 'show', 'match');
+        for (let i = 0; i < cards.length; i++) {
+            cards[i].classList.remove('open', 'show', 'match');
         }
     }, 2000);
 
     // adds a click event to each one of the cards and on click card is added to Opened cards 
-    for(let i = 0; i < cardList.length; i++) {
-        cardList[i].addEventListener('click',function () {
-            cardList[i].classList.add('show','open');
-            cardList[i].onclick = targetClick(event);
-        })
+    for(let i = 0; i < cards.length; i++) {
+        cards[i].addEventListener('click',function () {
+           // *****maybe add some logic here to check to see if card is already open? or has class of match? 
+            console.log(cards[i].classList);
+           if (openCards.length < 2 ) {
+              cards[i].classList.add('show','open');
+              addOpenCard(cards[i]);
+        //    cards[i].onclick = targetClick(event);
+           } else {
+               checkOpenCards();
+               updateMoves();
+           }
+        });
     }
-
 }
 
 /*
@@ -114,3 +166,8 @@ function startGame() {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+
+
+
+
