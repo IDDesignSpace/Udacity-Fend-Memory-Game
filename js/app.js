@@ -205,8 +205,29 @@ function startGame() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+
+// StopWatch 
+let sec = 0; let min = 0; let hour = 0;
+
+function stopWatch() {
+
+    setInterval(function () {
+        sec++;
+        if (sec == 60) {
+            min++;
+            sec = 0;
+            console.log(min);
+        }
+        if (min == 60) {
+            hour++;
+            console.log(hour);
+        }
+    }, 1000);
+}
+stopWatch();
+
  
-//  congratulations modal
+// congratulations modal
 // creates html
 // display number of stars
 // display timer 
