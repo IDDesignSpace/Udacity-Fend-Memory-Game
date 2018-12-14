@@ -28,6 +28,14 @@ let starList  = document.querySelectorAll('.fa-star');
 let stars = [...starList];
 
 
+let minutes = document.querySelector('li.minutes');
+let seconds = document.querySelector('li.seconds');
+
+// Sets up time
+let sec = 0;
+let min = 0;
+
+
 //  This fires the "Start Game" function
 document.body.onload = startGame(), restartGame();
 
@@ -50,10 +58,10 @@ function shuffle(array) {
 function restartGame() {
     restartButton.addEventListener('click', function restart() {
         location.reload();
-    });
+    });   
+    setTimeout(stopWatch, 1000);
 }
 //updates stars based on number of moves
-
 function updateStars() {
     if (moves < 8 && matchedCards.length < 16) {
         for(let i = 0; i < stars.length; i++) {
@@ -74,6 +82,25 @@ function updateStars() {
         return;
     }
 
+}
+
+
+// stopwatch function
+function stopWatch() {
+  
+    setInterval(function () {
+        minutes.innerHTML = min;
+        seconds.innerHTML = sec;
+        sec++;
+        if (sec == 60) {
+            min++;
+            sec = 0;
+        }
+        if (min == 60) {
+            min = 0;
+            sec = 0;
+        }
+    }, 1000);
 }
 
 // Display Card Function
@@ -126,22 +153,6 @@ function checkOpenCards() {
     }
    
 }
-// // This is what happens when a card is clicked
-
-// function targetClick(event) {
-//     let cardClicked = event.target;
-//     console.log(cardClicked.className);
-
-//     //if the card clicked is already open or matched do nothing!
-
-// }
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
 // This is the function that starts the game
 function startGame() {
@@ -168,8 +179,7 @@ function startGame() {
 
     // adds a click event to each one of the cards and on click card is added to Opened cards 
     for(let i = 0; i < cards.length; i++) {
-        cards[i].addEventListener('click',function () {
-             
+        cards[i].addEventListener('click',function () { 
             console.log(cards[i].classList);
 
            //upon clicking a card the length of the openCards array is checked
@@ -190,6 +200,8 @@ function startGame() {
 
         // calls to updateStarsFunction
         updateStars();
+
+        
     }
 
 }
@@ -206,27 +218,7 @@ function startGame() {
  */
 
 
-// StopWatch 
-let sec = 0; let min = 0; let hour = 0;
 
-function stopWatch() {
-
-    setInterval(function () {
-        sec++;
-        if (sec == 60) {
-            min++;
-            sec = 0;
-            console.log(min);
-        }
-        if (min == 60) {
-            hour++;
-            console.log(hour);
-        }
-    }, 1000);
-}
-stopWatch();
-
- 
 // congratulations modal
 // creates html
 // display number of stars

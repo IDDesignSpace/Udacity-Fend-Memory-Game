@@ -104,10 +104,46 @@ h1 {
 }
 
 .score-panel .restart {
-    float: right;
+    margin-top: 13px;
+    margin-right:60px;
+    text-align: center;
+    float: right; 
     cursor: pointer;
 }
 
 .yellow-star {
     color:yellow;
 }
+
+.stopwatch {
+    display: inline-block;  
+}
+
+.stopwatch li {
+    list-style: none;
+    display:inline-block;
+}
+
+/* .pop-up {
+   visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+.show {
+  visibility: visible;
+  position:absolute;
+  background-color: white;
+  border:solid 3px blue;
+  border-radius:10%;
+  padding:30px; 
+ 
+} */
