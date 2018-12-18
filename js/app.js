@@ -11,10 +11,10 @@ let deck = document.querySelector('.deck');
 //Opened card array
 let openCards = [];
 
-//matched cards
+//Matched cards
 let matchedCards = [];
 
-//grabs "moves" class from HTML
+//Grabs "moves" class from HTML
 let movesCounter = document.querySelector('.moves');
 
 //Moves counter
@@ -23,18 +23,26 @@ let moves = 0;
 //Grabs restart button 
 let restartButton = document.querySelector('.restart');
 
-// grabs star list
+// Grabs star list
 let starList  = document.querySelectorAll('.fa-star');
 let stars = [...starList];
 
 
 let minutes = document.querySelector('li.minutes');
 let seconds = document.querySelector('li.seconds');
+let interval;
 
 // Sets up time
 let sec = 0;
 let min = 0;
 
+//Grabs elements for Congratulations modal
+
+let modal = document.querySelector('div.modal');
+let finalStars = document.querySelector('.final-stars');
+let finalMoves = document.querySelector('.final-moves');
+let finalMin = document.querySelector('.final-min');
+let finalSec = document.querySelector('.final-sec');  
 let finalstarRating = 3;
 
 
@@ -56,14 +64,14 @@ function shuffle(array) {
     return array;
 }
 
-// restart game function 
+// Restart game function 
 function restartGame() {
     restartButton.addEventListener('click', function restart() {
         location.reload();
     });   
     setTimeout(stopWatch, 1000);
 }
-//updates stars based on number of moves
+//Updates stars based on number of moves
 function updateStars() {
     if (moves < 8 && matchedCards.length < 16) {
         for(let i = 0; i < stars.length; i++) {
@@ -91,9 +99,9 @@ function updateStars() {
 }
 
 
-// stopwatch function
+// Stopwatch function
 function stopWatch() {
-    setInterval(function () {
+  interval= setInterval(function () {
         minutes.innerHTML = min;
         seconds.innerHTML = sec;
         sec++;
@@ -121,7 +129,7 @@ function updateMoves() {
     movesCounter.innerHTML = moves;
 }
 
-//  function: add to open cards
+//Adds to open cards
 function addOpenCard (card) {
     openCards.push(card);
 }
@@ -140,6 +148,7 @@ function addMatchedCards() {
             openCards[i].onclick = targetClick(event);
         });
         matchedCards.push(openCards[i]);
+        congratsModal();
     }
   
 }
@@ -150,7 +159,7 @@ function checkOpenCards() {
     if (openCards[0].innerHTML === openCards[1].innerHTML) {
         addMatchedCards();
         clearOpenCards();
-        congratsModal();
+        
     } else {
         for (let i = 0; i < openCards.length; i++) {
             openCards[i].classList.remove('open', 'show');   
@@ -159,6 +168,28 @@ function checkOpenCards() {
     }
    
 }
+
+//Function creates congratulations modal
+
+function congratsModal() {
+    // removes hidden CSS properties
+    if (matchedCards.length === 16) {
+        modal.classList.remove('hide');
+        // Updates final stars
+        finalStars.innerHTML = finalstarRating;
+        //Updates final moves
+        finalMoves.innerHTML = moves;
+        //Updates time and clears out timer
+        finalSec.innerHTML = sec;
+        finalMin.innerHTML = min;
+
+        modal.classList.add('pop');
+        clearInterval(interval);
+    }
+
+    return;
+}
+
 
 // This is the function that starts the game
 function startGame() {
@@ -181,14 +212,14 @@ function startGame() {
         for (let i = 0; i < cards.length; i++) {
             cards[i].classList.remove('open', 'show', 'match');
         }
-    }, 1500);
+    }, 1200);
 
-    // adds a click event to each one of the cards and on click card is added to Opened cards 
+    // Adds a click event to each one of the cards and on click card is added to Opened cards 
     for(let i = 0; i < cards.length; i++) {
         cards[i].addEventListener('click',function () { 
             console.log(cards[i].classList);
 
-           //upon clicking a card the length of the openCards array is checked  
+           //Upon clicking a card the length of the openCards array is checked  
            if (openCards.length < 2 ) {
                
               cards[i].classList.add('show','open');
@@ -203,7 +234,7 @@ function startGame() {
 
         });
 
-        // calls to updateStarsFunction
+        // Calls to updateStarsFunction
         updateStars();
 
         
@@ -211,45 +242,3 @@ function startGame() {
 
 }
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
-
-
-// congratulations modal
-// creates html
-// display number of stars
-// display timer 
-// if matched cards equal 16 display modal
-
-let modal=document.querySelector('div.modal');
-let finalStars = document.querySelector('.final-stars'); 
-let finalMoves = document.querySelector('.final-moves');
-let finalMin = document.querySelector('.final-min'); 
-let finalSec = document.querySelector('.final-sec');  
-
-function congratsModal () {
-   // removes hidden CSS properties
-   if( matchedCards.length === 16) {
-   modal.classList.remove('hide');
-   // Updates final stars
-   finalStars.innerHTML = finalstarRating;
-   //Updates final moves
-   finalMoves.innerHTML = moves;
-   //Updates time and clears out timer
-   finalSec.innerHTML = sec;
-   finalMin.innerHTML = min;
-
-   modal.classList.add('pop');
-   } 
-
-   return;
-}
