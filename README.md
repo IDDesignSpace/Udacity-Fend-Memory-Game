@@ -13,6 +13,6 @@ Upon the page loading the game will start automatically cards will be shuffled a
 
 ## Acknowledgements
 
-MDN Web Documentation
-W3C Web Documentation
-[Stopwatch tutorial](https://www.ostraining.com/blog/coding/stopwatch/)
+-MDN Web Documentation
+-W3C Web Documentation
+-[Stopwatch tutorial](https://www.ostraining.com/blog/coding/stopwatch/)
