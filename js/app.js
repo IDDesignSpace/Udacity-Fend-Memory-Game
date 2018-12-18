@@ -35,6 +35,8 @@ let seconds = document.querySelector('li.seconds');
 let sec = 0;
 let min = 0;
 
+let finalstarRating = 3;
+
 
 //  This fires the "Start Game" function
 document.body.onload = startGame(), restartGame();
@@ -66,18 +68,22 @@ function updateStars() {
     if (moves < 8 && matchedCards.length < 16) {
         for(let i = 0; i < stars.length; i++) {
         stars[i].classList.add('yellow-star');
+        finalstarRating = 3;
         }
 
     } else if (moves < 16 && matchedCards.length < 16) {
         stars[0].classList.remove('yellow-star');
         stars[1].classList.add('yellow-star'); 
+        finalstarRating = 2;
 
     } else if (moves < 24 && matchedCards.length < 16) {
         stars[0].classList.remove('yellow-star');
         stars[1].classList.remove('yellow-star');
+        finalstarRating = 1;
     } else {
         for (let i = 0; i < stars.length; i++) {
             stars[i].classList.remove('yellow-star');
+            finalstarRating = 0;
         }
         return;
     }
@@ -87,7 +93,6 @@ function updateStars() {
 
 // stopwatch function
 function stopWatch() {
-  
     setInterval(function () {
         minutes.innerHTML = min;
         seconds.innerHTML = sec;
@@ -145,6 +150,7 @@ function checkOpenCards() {
     if (openCards[0].innerHTML === openCards[1].innerHTML) {
         addMatchedCards();
         clearOpenCards();
+        congratsModal();
     } else {
         for (let i = 0; i < openCards.length; i++) {
             openCards[i].classList.remove('open', 'show');   
@@ -182,10 +188,9 @@ function startGame() {
         cards[i].addEventListener('click',function () { 
             console.log(cards[i].classList);
 
-           //upon clicking a card the length of the openCards array is checked
-            
+           //upon clicking a card the length of the openCards array is checked  
            if (openCards.length < 2 ) {
-
+               
               cards[i].classList.add('show','open');
               addOpenCard(cards[i]);
         //    cards[i].onclick = targetClick(event);
@@ -225,6 +230,26 @@ function startGame() {
 // display timer 
 // if matched cards equal 16 display modal
 
+let modal=document.querySelector('div.modal');
+let finalStars = document.querySelector('.final-stars'); 
+let finalMoves = document.querySelector('.final-moves');
+let finalMin = document.querySelector('.final-min'); 
+let finalSec = document.querySelector('.final-sec');  
 
+function congratsModal () {
+   // removes hidden CSS properties
+   if( matchedCards.length === 16) {
+   modal.classList.remove('hide');
+   // Updates final stars
+   finalStars.innerHTML = finalstarRating;
+   //Updates final moves
+   finalMoves.innerHTML = moves;
+   //Updates time and clears out timer
+   finalSec.innerHTML = sec;
+   finalMin.innerHTML = min;
 
+   modal.classList.add('pop');
+   } 
 
+   return;
+}

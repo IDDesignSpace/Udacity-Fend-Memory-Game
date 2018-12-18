@@ -124,26 +124,18 @@ h1 {
     display:inline-block;
 }
 
-/* .pop-up {
-   visibility: hidden;
-  width: 160px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 8px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -80px;
+.hide {
+    display:none;
 }
-.show {
+.pop {
+  background: #ffffff url('../img/geometry2.png');
   visibility: visible;
   position:absolute;
   background-color: white;
-  border:solid 3px blue;
+  border:solid 8px green;
   border-radius:10%;
   padding:30px; 
+  left:42.5%;
+  top:30%;
  
-} */
+}
