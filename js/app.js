@@ -1,4 +1,3 @@
-
 //  This grabs the list of cards
 let cardList = document.querySelectorAll("li.card");
 
@@ -24,7 +23,7 @@ let moves = 0;
 let restartButton = document.querySelector('.restart');
 
 // Grabs star list
-let starList  = document.querySelectorAll('.fa-star');
+let starList = document.querySelectorAll('.fa-star');
 let stars = [...starList];
 
 
@@ -42,12 +41,12 @@ let modal = document.querySelector('div.modal');
 let finalStars = document.querySelector('.final-stars');
 let finalMoves = document.querySelector('.final-moves');
 let finalMin = document.querySelector('.final-min');
-let finalSec = document.querySelector('.final-sec');  
+let finalSec = document.querySelector('.final-sec');
 let finalstarRating = 3;
 
 
 //  This fires the "Start Game" function
-document.body.onload = startGame(), restartGame();
+document.body.onload = startGame();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -65,23 +64,21 @@ function shuffle(array) {
 }
 
 // Restart game function 
-function restartGame() {
+
     restartButton.addEventListener('click', function restart() {
-        location.reload();
-    });   
-    setTimeout(stopWatch, 1000);
-}
+        startGame();
+    });
 //Updates stars based on number of moves
 function updateStars() {
     if (moves < 8 && matchedCards.length < 16) {
-        for(let i = 0; i < stars.length; i++) {
-        stars[i].classList.add('yellow-star');
-        finalstarRating = 3;
+        for (let i = 0; i < stars.length; i++) {
+            stars[i].classList.add('yellow-star');
+            finalstarRating = 3;
         }
 
     } else if (moves < 16 && matchedCards.length < 16) {
         stars[0].classList.remove('yellow-star');
-        stars[1].classList.add('yellow-star'); 
+        stars[1].classList.add('yellow-star');
         finalstarRating = 2;
 
     } else if (moves < 24 && matchedCards.length < 16) {
@@ -101,7 +98,7 @@ function updateStars() {
 
 // Stopwatch function
 function stopWatch() {
-  interval= setInterval(function () {
+    interval = setInterval(function () {
         minutes.innerHTML = min;
         seconds.innerHTML = sec;
         sec++;
@@ -130,7 +127,7 @@ function updateMoves() {
 }
 
 //Adds to open cards
-function addOpenCard (card) {
+function addOpenCard(card) {
     openCards.push(card);
 }
 
@@ -150,7 +147,7 @@ function addMatchedCards() {
         matchedCards.push(openCards[i]);
         congratsModal();
     }
-  
+
 }
 
 function checkOpenCards() {
@@ -159,14 +156,14 @@ function checkOpenCards() {
     if (openCards[0].innerHTML === openCards[1].innerHTML) {
         addMatchedCards();
         clearOpenCards();
-        
+
     } else {
         for (let i = 0; i < openCards.length; i++) {
-            openCards[i].classList.remove('open', 'show');   
+            openCards[i].classList.remove('open', 'show');
         }
         clearOpenCards();
     }
-   
+
 }
 
 //Function creates congratulations modal
@@ -194,16 +191,16 @@ function congratsModal() {
 // This is the function that starts the game
 function startGame() {
 
-    
+
     //Cards are shuffled then added to the deck
     let shuffledCards = shuffle(cards);
-    
+
     // This for loop adds each one of the shuffled cards back into the deck
-    for(let i = 0;i < shuffledCards.length; i++) {        
+    for (let i = 0; i < shuffledCards.length; i++) {
         //This calls the deck and then appends each one of the shuffled cards back into the deck
-        deck.appendChild(shuffledCards[i]);    
+        deck.appendChild(shuffledCards[i]);
     }
-    
+
     //Calls to displayCards function
     displayCards();
 
@@ -215,30 +212,29 @@ function startGame() {
     }, 1200);
 
     // Adds a click event to each one of the cards and on click card is added to Opened cards 
-    for(let i = 0; i < cards.length; i++) {
-        cards[i].addEventListener('click',function () { 
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].addEventListener('click', function () {
             console.log(cards[i].classList);
 
-           //Upon clicking a card the length of the openCards array is checked  
-           if (openCards.length < 2 ) {
-               
-              cards[i].classList.add('show','open');
-              addOpenCard(cards[i]);
-        //    cards[i].onclick = targetClick(event);
+            //Upon clicking a card the length of the openCards array is checked  
+            if (openCards.length < 2) {
 
-           } else {
-               checkOpenCards();
-               updateMoves();
-               updateStars();
-           }
+                cards[i].classList.add('show', 'open');
+                addOpenCard(cards[i]);
+                //    cards[i].onclick = targetClick(event);
+
+            } else {
+                checkOpenCards();
+                updateMoves();
+                updateStars();
+            }
 
         });
 
         // Calls to updateStarsFunction
         updateStars();
 
-        
+
     }
 
 }
-
