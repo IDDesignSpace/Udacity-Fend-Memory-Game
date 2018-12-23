@@ -42,6 +42,7 @@ let finalStars = document.querySelector('.final-stars');
 let finalMoves = document.querySelector('.final-moves');
 let finalMin = document.querySelector('.final-min');
 let finalSec = document.querySelector('.final-sec');
+let modalRestartButton = document.querySelector('.modal-restart');
 let finalstarRating = 3;
 
 
@@ -65,9 +66,12 @@ function shuffle(array) {
 
 // Restart game function 
 
-    restartButton.addEventListener('click', function restart() {
-        startGame();
-    });
+restartButton.addEventListener('click', function restart() {
+    startGame();
+    clearInterval(interval);
+
+});
+
 //Updates stars based on number of moves
 function updateStars() {
     if (moves < 8 && matchedCards.length < 16) {
@@ -122,6 +126,7 @@ function displayCards() {
 
 //Upates the HTML with the move counter
 function updateMoves() {
+
     moves++;
     movesCounter.innerHTML = moves;
 }
@@ -139,11 +144,8 @@ function clearOpenCards() {
 //Adds matched cards to matchedCard array
 function addMatchedCards() {
     for (let i = 0; i < openCards.length; i++) {
-        openCards[i].classList.add('match', 'show');
-        openCards[i].removeEventListener('click', function () {
-            openCards[i].classList.add('show', 'open');
-            openCards[i].onclick = targetClick(event);
-        });
+        openCards[i].classList.add('match', 'show','disabled');
+
         matchedCards.push(openCards[i]);
         congratsModal();
     }
@@ -179,12 +181,21 @@ function congratsModal() {
         //Updates time and clears out timer
         finalSec.innerHTML = sec;
         finalMin.innerHTML = min;
-
         modal.classList.add('pop');
         clearInterval(interval);
+        modalRestartButton.addEventListener('click', function () {
+            closeModal();
+            startGame();
+            clearInterval(interval);
+        })
     }
 
     return;
+}
+
+function closeModal() {
+    modal.classList.remove('pop');
+    modal.classList.add('hide');
 }
 
 
@@ -193,16 +204,26 @@ function startGame() {
 
 
     //Cards are shuffled then added to the deck
-    let shuffledCards = shuffle(cards);
+    shuffle(cards);
 
     // This for loop adds each one of the shuffled cards back into the deck
-    for (let i = 0; i < shuffledCards.length; i++) {
+    for (let i = 0; i < cards.length; i++) {
         //This calls the deck and then appends each one of the shuffled cards back into the deck
-        deck.appendChild(shuffledCards[i]);
+        cards[i].classList.remove('open','match', 'show', 'disabled');
+        deck.appendChild(cards[i]);
     }
 
     //Calls to displayCards function
     displayCards();
+
+    // reset timer
+    sec = 0;
+    min = 0;
+    stopWatch();
+
+    // resets moves counter
+    moves = 0;
+    movesCounter.innerHTML = moves;
 
     //This closes the cards after 5 seconds
     setTimeout(function closeCards() {
@@ -211,30 +232,39 @@ function startGame() {
         }
     }, 1200);
 
-    // Adds a click event to each one of the cards and on click card is added to Opened cards 
-    for (let i = 0; i < cards.length; i++) {
-        cards[i].addEventListener('click', function () {
-            console.log(cards[i].classList);
-
-            //Upon clicking a card the length of the openCards array is checked  
-            if (openCards.length < 2) {
-
-                cards[i].classList.add('show', 'open');
-                addOpenCard(cards[i]);
-                //    cards[i].onclick = targetClick(event);
-
-            } else {
-                checkOpenCards();
-                updateMoves();
-                updateStars();
-            }
-
-        });
-
-        // Calls to updateStarsFunction
-        updateStars();
+    // Calls to updateStarsFunction
+    updateStars();
+}
 
 
+// Adds a click event to each one of the cards and on click card is added to Opened cards 
+for (let i = 0; i < cards.length; i++) {
+    cards[i].addEventListener("click", function (event) {
+
+        if (openCards.length < 2 && event.target !== openCards[0]) {
+            event.target.classList.add('show', 'open');
+            addOpenCard(event.target);
+            //    cards[i].onclick = targetClick(event);
+
+        } else if (event.target == openCards[0]) {
+            // adds condition to check if card has been clicked twice
+            console.log("you clicked the same card twice");
+            return;
+        }
+        else {
+            checkOpenCards();
+            updateMoves();
+            updateStars();
+        }
+    });
+}
+
+function checkIfNotMatched(targetedCard) {
+    for(let i = 0; i < matchedCards.length; i++) {
+        if (targetedCard = matchedCards[i]){
+            console.log("you already matched that card");
+            return false; 
+        }
+        return true;
     }
-
 }
