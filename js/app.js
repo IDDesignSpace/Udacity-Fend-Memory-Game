@@ -259,12 +259,3 @@ for (let i = 0; i < cards.length; i++) {
     });
 }
 
-function checkIfNotMatched(targetedCard) {
-    for(let i = 0; i < matchedCards.length; i++) {
-        if (targetedCard = matchedCards[i]){
-            console.log("you already matched that card");
-            return false; 
-        }
-        return true;
-    }
-}
