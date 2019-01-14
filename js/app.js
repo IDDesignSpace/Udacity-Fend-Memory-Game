@@ -69,7 +69,6 @@ function shuffle(array) {
 restartButton.addEventListener('click', function restart() {
     startGame();
     clearInterval(interval);
-
 });
 
 //Updates stars based on number of moves
@@ -233,7 +232,10 @@ function startGame() {
     }, 1200);
 
     // Calls to updateStarsFunction
-    updateStars();
+    for (let i = 0; i < stars.length; i++) {
+        stars[i].classList.add('yellow-star');
+        finalstarRating = 3;
+    }
 }
 
 
@@ -242,7 +244,7 @@ for (let i = 0; i < cards.length; i++) {
     cards[i].addEventListener("click", function (event) {
 
         if (openCards.length < 2 && event.target !== openCards[0]) {
-            event.target.classList.add('show', 'open');
+            event.target.classList.add('show', 'open','disabled');
             addOpenCard(event.target);
             //    cards[i].onclick = targetClick(event);
 
